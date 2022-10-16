@@ -1,15 +1,16 @@
-import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.17;
 
-pragma solidity ^0.8.9;
+import "@openzeppelin/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 
-contract Main {
-    ERC20 public token;
-
-    constructor(address _token) {
-        token = ERC20(_token);
+contract EGame is Initializable, ERC20Upgradeable {
+    /// @custom:oz-upgrades-unsafe-allow constructor
+    constructor() {
+        _disableInitializers();
     }
 
-    function transfer(address _to, uint256 _amount) public {
-        token.transfer(_to, _amount);
+    function initialize() initializer public {
+        __ERC20_init("EGame", "EG");
     }
 }
