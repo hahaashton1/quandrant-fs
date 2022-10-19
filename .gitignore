@@ -20,6 +20,7 @@
 *.pem
 artifacts
 cache
+.env
 
 # debug
 npm-debug.log*
