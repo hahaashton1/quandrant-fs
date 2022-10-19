@@ -1,23 +1,40 @@
-import Head from 'next/head'
-import { useAccount, useContractWrite, usePrepareContractWrite } from 'wagmi'
-import { mainABI, mainAddress } from "../contract"
+import Head from "next/head";
+import React from "react";
+import { useAccount, useContractWrite, usePrepareContractWrite } from "wagmi";
+import { mainABI, mainAddress } from "../contract";
+import { useState } from "react";
+import { useDebounce } from "use-debounce";
 
 export default function Home() {
+  const [score, setScore] = useState(0);
+  // I'm not even sure if the debounce is working properly lol
+  const debounceScore = parseInt(useDebounce(score, 1000));
+
+  // Get current datetime
+  const getDT = () => {
+    const date = new Date().getTime();
+    const birthDateInUnixTimestamp = Math.floor(date / 1000);
+    return birthDateInUnixTimestamp;
+  };
+
+  const handleInputChange = (e) => {
+    setScore(e.target.value);
+  };
 
   // Global WAGMI hooks to access the connected wallet
   const { address, isConnected } = useAccount();
 
-  // WAGMI hook for calling claim function
-  // const buy = useContractWrite({
-  //   ...config,
-  //   onSuccess(data) {
-  //     console.log("Successfully minted!", data);
+  // WAGMI hook configuration
+  // uint8 _score, uint8 _datetime
+  const { config } = usePrepareContractWrite({
+    address: mainAddress,
+    abi: mainABI,
+    functionName: "play",
+    args: [debounceScore, getDT()],
+  });
 
-  //     // After it the NFT has successfully been minted,
-  //     // Create a receipt/transaction in Firebase
-  //     createDocument();
-  //   }
-  // });
+  // WAGMI hook for calling claim function
+  const { write: play } = useContractWrite(config);
 
   return (
     <div>
@@ -29,19 +46,33 @@ export default function Home() {
 
       <main>
         <div className="grid place-items-center justify-center">
-            <div className="grid grid-cols-1 gap-6 content-center max-w-screen-lg">
-              <div className="card w-96 bg-base-100 shadow-xl">
-                <div className="card-body">
-                  <h2 className="card-title">Card title!</h2>
-                  <p>If a dog chews shoes whose shoes does he choose?</p>
-                  <div className="card-actions justify-end">
+          <div className="grid grid-cols-1 gap-6 content-center max-w-screen-lg">
+            <div className="card w-96 bg-base-100 shadow-xl">
+              <div className="card-body">
+                <h2 className="card-title">Lets play!</h2>
+                <p>Please enter a game score!</p>
+                {/* <div className="card-actions justify-end">
                     <button className="btn btn-primary">Play</button>
-                  </div>
+                  </div> */}
+                <div className="input-group">
+                  <input
+                    type="number"
+                    defaultValue={0}
+                    placeholder="Enter score"
+                    className="input input-bordered"
+                    onChange={(e) => {
+                      handleInputChange(e);
+                    }}
+                  />
+                  <button className="btn btn-square" onClick={() => play?.()}>
+                    Play
+                  </button>
                 </div>
               </div>
             </div>
+          </div>
         </div>
       </main>
     </div>
-  )
+  );
 }

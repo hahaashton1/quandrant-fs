@@ -8,7 +8,9 @@ async function main() {
     kind: "transparent",
   });
   await contract.deployed();
-  console.log("EGameCore deployed to:", contract.address);
+  const implementationAddress = await upgrades.erc1967.getImplementationAddress(contract.address);
+  console.log("Proxy deployed to:", contract.address);
+  console.log("Implementation deployed to:", implementationAddress);
 }
 
 main();

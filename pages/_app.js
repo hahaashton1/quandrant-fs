@@ -18,11 +18,10 @@ function MyApp({ Component, pageProps }) {
 
   //Wagmi settings
   const { chains, provider, webSocketProvider } = configureChains(
-    defaultChains,
-    [infuraProvider({ apiKey: 'd8d884a3604f45e1b2273b6bd36127de' }),
+    [chain.polygonMumbai],
+    [infuraProvider({ apiKey: '78521fe0b9a745588e8715d84a32d941' }),
     publicProvider(),
   ])
-
 
   const client = createClient({
     autoConnect: true,
