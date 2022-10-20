@@ -1,34 +1,45 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## Architecture Diagram
 
-## Getting Started
+![Architecture Diagram](https://user-images.githubusercontent.com/54927531/197005038-1cb1bf73-b9ec-4047-9980-400ff741e634.jpg)
 
-First, run the development server:
+ So as to tackle the requirement of scalability, I implemented a proxy pattern for the core contract so as to allow future upgrades of the core contract.
+ 
+ Another possible future upgrade for the game would be to allow for gasless transactions to incentivize players to play more, or more players to play. 
+ 
+ Instead of sending transactions directly to the core contract, a relayer can help collate transactions send it to a receiver contract, where it will help pay the gas cost. This will result in the players not having to pay for anything.
 
-```bash
-npm run dev
-# or
-yarn dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Tech Stack
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+**Client:** NextJS, TailwindCSS, DaisyUI
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+**Backend:** Solidity
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+**Others:** WAGMI, Ethers, Hardhat, Open-zeppelin, Infura
 
-## Learn More
 
-To learn more about Next.js, take a look at the following resources:
+## Improvements
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+  1) Going forward, to improve the quality of the code, I would use a state management library like Redux or Recoil. Due to time constraint, I chose to store states locally instead.
+  
+  2) The main components and methods in the index page can be further broken down into smaller functional components, which would give the overall code a much cleaner look.
+  
+  3) Unit tests could have been written in Mocha or Waffle. However, this time around, I tested the code in Remix.
+  
+  4) Faced some hydration issue with the UI when using WAGMI. It is somewhat fixed for now, but I have no idea what's causing it or how it got solved.
+    
+## Instructions
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+  1) Make sure you have a Metamask wallet 
+  2) Get some MATIC for Mumbai testnet: https://faucet.polygon.technology/
+  3) Head over to the Vercel app: https://quandrant-fs.vercel.app/
+  4) Enter a score that you want -- I only preminted 10k tokens, so please input a small number haha, like 1-100 maybe
+  5) Click on play -- If nothing pops up, try double/triple clicking the button.
+  6) Check your score history below the card -- Your score history will only be updated every time you connect/re-connect your wallet
 
-## Deploy on Vercel
+## Signing off
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Always happy to build, make mistakes and learn from them.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Cheers,
+Ashton
