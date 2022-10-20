@@ -71,7 +71,7 @@ export default function Home() {
       setFlag(false);
       setScoreRecords(null);
     }
-  }, [isConnected, isDisconnected]);
+  }, [isConnected, isDisconnected, getUserScores]);
 
   return (
     <div>

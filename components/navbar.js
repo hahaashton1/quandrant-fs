@@ -18,7 +18,7 @@ const Navbar = () => {
       setConnectedAddress(address);
       setBalance(data);
     }
-  }, [isConnected, address]);
+  }, [isConnected, address, data]);
 
   const handleDisconnect = () => {
     disconnect();
