@@ -50,7 +50,8 @@ contract EGameCore is Initializable, ERC20Upgradeable, OwnableUpgradeable {
             emit GamePlayed(msg.sender, _datetime, _score);
         }
     }
-
+    
+    // Function to get all scores belonging to an address
     function getUserScores(address _user) external view returns (Player[] memory) {
         uint256 length = uint256(addressToPlayer[_user].length);
         Player[] memory result = new Player[](length);

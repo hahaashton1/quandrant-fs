@@ -21,6 +21,8 @@
 artifacts
 cache
 .env
+.openzeppelin/
+.vscode
 
 # debug
 npm-debug.log*

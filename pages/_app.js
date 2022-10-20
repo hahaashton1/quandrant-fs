@@ -1,6 +1,6 @@
-import '../styles/globals.css'
-import Layout from '../components/Layout'
-import React from 'react'
+import "../styles/globals.css";
+import Layout from "../components/Layout";
+import React from "react";
 
 import {
   WagmiConfig,
@@ -8,26 +8,25 @@ import {
   defaultChains,
   configureChains,
   chain,
-} from 'wagmi'
+} from "wagmi";
 
-import { publicProvider } from 'wagmi/providers/public'
-import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
-import { infuraProvider } from 'wagmi/providers/infura'
+import { publicProvider } from "wagmi/providers/public";
+import { MetaMaskConnector } from "wagmi/connectors/metaMask";
+import { infuraProvider } from "wagmi/providers/infura";
 
 function MyApp({ Component, pageProps }) {
-
   //Wagmi settings
   const { chains, provider, webSocketProvider } = configureChains(
     [chain.polygonMumbai],
-    [infuraProvider({ apiKey: '78521fe0b9a745588e8715d84a32d941' }),
-    publicProvider(),
-  ])
+    [
+      infuraProvider({ apiKey: "78521fe0b9a745588e8715d84a32d941" }),
+      publicProvider(),
+    ]
+  );
 
   const client = createClient({
     autoConnect: true,
-    connectors: [
-      new MetaMaskConnector({ chains }),
-    ],
+    connectors: [new MetaMaskConnector({ chains })],
     provider,
     webSocketProvider,
   });
@@ -39,7 +38,6 @@ function MyApp({ Component, pageProps }) {
       </Layout>
     </WagmiConfig>
   );
-
 }
 
-export default MyApp
+export default MyApp;

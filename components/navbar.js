@@ -1,13 +1,8 @@
-import React, { useEffect } from "react";
-
-import {
-  useAccount,
-  useConnect,
-  useDisconnect,
-  useBalance,
-} from "wagmi";
+import React, { useEffect, useState } from "react";
+import { useAccount, useConnect, useDisconnect, useBalance } from "wagmi";
 
 const Navbar = () => {
+  const [balance, setBalance] = useState();
   const [connectedAddress, setConnectedAddress] = React.useState(null);
   const { address, isConnected } = useAccount();
   const { connect, connectors, error, isLoading, pendingConnector } =
@@ -21,6 +16,7 @@ const Navbar = () => {
   useEffect(() => {
     if (isConnected && address) {
       setConnectedAddress(address);
+      setBalance(data);
     }
   }, [isConnected, address]);
 
@@ -38,9 +34,12 @@ const Navbar = () => {
         <div className="flex items-center space-x-2 ml-auto text-[#1E0536]">
           {/* {isConnected && (
             <div className="px-2">
-              Balance: {data?.formatted} {data?.symbol}
+              Balance: {balance?.formatted} {balance?.symbol}
             </div>
           )} */}
+          <div>
+            Balance: {data?.formatted} {data?.symbol}
+          </div>
           {connectors.map((connector) => (
             <button
               className="btn btn-primary"
