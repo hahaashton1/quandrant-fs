@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useAccount, useConnect, useDisconnect, useBalance } from "wagmi";
+import { mainABI, mainAddress } from "../contract";
 
 const Navbar = () => {
   const [balance, setBalance] = useState();
@@ -10,7 +11,7 @@ const Navbar = () => {
   const { disconnect } = useDisconnect();
   const { data } = useBalance({
     addressOrName: address,
-    token: "0x3bA3952faca093737C747BD2e5641C692D43a69a",
+    token: mainAddress,
   });
 
   useEffect(() => {
